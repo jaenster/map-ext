@@ -19,11 +19,11 @@ class Events {
         }
     }
 
-    async on(key: string, cb: EventHandler) {
+    on(key: string, cb: EventHandler) {
         eventStore.get(this).get(key).add(cb);
     }
 
-    async off(key: string, cb: EventHandler) {
+    off(key: string, cb: EventHandler) {
         eventStore.get(this).get(key).delete(cb);
     }
 }
