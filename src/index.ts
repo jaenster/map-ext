@@ -3,21 +3,21 @@ interface Extender<K, V> {
 }
 
 export class WeakMapExt<K extends object, V> extends WeakMap<K, V> implements Extender<K, V> {
-    constructor(private readonly cb: () => V) {
+    constructor(private readonly cb: (k: K) => V) {
         super()
     }
 }
 
 export class MapExt<K, V> extends Map<K, V> implements Extender<K, V> {
 
-    constructor(private readonly cb: () => V) {
+    constructor(private readonly cb: (k: K) => V) {
         super()
     }
 }
 
 const factory = (prototype) => function get(key) {
     if (this.has(key)) return prototype.call(this, key);
-    const v = this.cb();
+    const v = this.cb(key);
     this.set(key, v);
     return v;
 }

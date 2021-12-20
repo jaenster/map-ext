@@ -3,21 +3,27 @@ import {MapExt} from "../src";
 
 describe('map-ext', () => {
     let called = 0;
-    const wk = new MapExt<object, { test: number }>(() => ({test: called++}));
+    const mp = new MapExt<object, { test: number, k: object|any }>((k) => ({test: called++, k}));
 
     test('get test', async () => {
-        const foo = {};
-        const bar = {}
+        const foo = {
+            a: 5
+        };
+        const bar = {
+            b: 6
+        }
 
-        expect(wk.has(foo)).toBeFalsy();
-        expect(wk.has(bar)).toBeFalsy();
+        expect(mp.has(foo)).toBeFalsy();
+        expect(mp.has(bar)).toBeFalsy();
 
-        wk.get(foo);
-        expect(wk.has(foo)).toBeTruthy();
-        expect(wk.get(foo).test).toBe(0);
+        mp.get(foo);
+        expect(mp.has(foo)).toBeTruthy();
+        expect(mp.get(foo).test).toBe(0);
+        expect(mp.get(foo).k.a).toBe(5);
 
-        wk.get(bar);
-        expect(wk.has(bar)).toBeTruthy();
-        expect(wk.get(bar).test).toBe(1);
+        mp.get(bar);
+        expect(mp.has(bar)).toBeTruthy();
+        expect(mp.get(bar).test).toBe(1);
+        expect(mp.get(bar).k.b).toBe(6);
     });
 });
