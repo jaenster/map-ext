@@ -29,3 +29,6 @@ class Events {
 }
 ```
 
+# esm - commonjs
+
+Since this package is so small it supports both esm and commonjs
